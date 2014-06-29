@@ -95,7 +95,8 @@ class Proxy
     (req, res, next) =>
       dest = splitHostPort(randomUpstream(req.conci_endpoint.upstream))
       @http_proxy.web(req, res, {
-        target: "http://#{dest.host}:#{dest.port}"
+        target: "http://#{dest.host}:#{dest.port}",
+        host: req.conci_domain
         })
 
 module.exports = new Proxy
