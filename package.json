@@ -1,0 +1,30 @@
+{
+  "name": "conci",
+  "version": "0.0.1",
+  "description": "OAuth Proxy",
+  "main": "lib/conci.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lxfontes/conci"
+  },
+  "keywords": [
+    "oauth",
+    "proxy",
+    "websockets"
+  ],
+  "author": "lxfontes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lxfontes/conci/issues"
+  },
+  "homepage": "https://github.com/lxfontes/conci",
+  "dependencies": {
+    "coffee-script": "1.7.1",
+    "http-proxy": "*",
+    "express": "*",
+    "express-session": "*",
+    "passport": "*",
+    "passport-oauth": "*",
+    "toml": "*"
+  }
+}

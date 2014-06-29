@@ -1,0 +1,19 @@
+[server]
+bind_ip = "0.0.0.0"
+bind_port = 8080
+cookie_secret = "monstah"
+# google apps domain
+auth_domain = "custom.com"
+
+[domains]
+  [domains.example1]
+  host = "localhost"
+  upstream = ["google.com:80", "yahoo.com:80"]
+  client_id = "__clientID__"
+  client_secret = "TWWWWz-EWWWWlxfX"
+
+  [domains.example2]
+  host = "localhost2"
+  upstream = ["google.com:80", "yahoo.com:80"]
+  client_id = "__clientID__"
+  client_secret = "TWWWWz-EWWWWlxfX"
