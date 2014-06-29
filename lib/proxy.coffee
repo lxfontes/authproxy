@@ -11,7 +11,7 @@ passport.deserializeUser (id, done) ->
 ensureAuthed = (req, res, next) ->
   if req.session.passport?.user?
     return next()
-  return res.redirect('/conci/google')
+  return res.redirect('/authproxy/google')
 
 testVerify = (accessToken, refreshToken, profile, done) ->
   console.log("Verified #{profile.email}")
@@ -52,7 +52,7 @@ class Proxy
       hostedDomain: auth_domain,
       clientID: domain.client_id,
       clientSecret: domain.client_secret,
-      callbackURL: "http://#{domain.host}/conci/google/return"
+      callbackURL: "http://#{domain.host}/authproxy/google/return"
       }, testVerify)
     passport.use(domain.host, strategy)
 
@@ -60,9 +60,9 @@ class Proxy
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(@checkDomain())
-    app.get('/conci/google', @redirect())
-    app.get('/conci/google/return', @callback())
-    app.get('/conci/user', ensureAuthed, @getUser())
+    app.get('/authproxy/google', @redirect())
+    app.get('/authproxy/google/return', @callback())
+    app.get('/authproxy/user', ensureAuthed, @getUser())
     app.get('/*', ensureAuthed, @goProxy())
 
 
@@ -72,11 +72,11 @@ class Proxy
 
   redirect: =>
     (req, res, next) =>
-      passport.authenticate(req.conci_domain, { scope: ['profile', 'email'] })(req, res, next)
+      passport.authenticate(req.authproxy_domain, { scope: ['profile', 'email'] })(req, res, next)
 
   callback: =>
     (req, res, next) =>
-      passport.authenticate(req.conci_domain, { successRedirect: '/', failureRedirect: '/conci/google' })(req, res, next)
+      passport.authenticate(req.authproxy_domain, { successRedirect: '/', failureRedirect: '/authproxy/google' })(req, res, next)
 
   checkDomain: =>
     (req, res, next) =>
@@ -87,17 +87,17 @@ class Proxy
       unless e?
         return res.status(404).send('invalid domain')
 
-      req.conci_endpoint = e
-      req.conci_domain = search_domain
+      req.authproxy_endpoint = e
+      req.authproxy_domain = search_domain
       next()
 
   goProxy: =>
     (req, res, next) =>
-      dest = splitHostPort(randomUpstream(req.conci_endpoint.upstream))
+      dest = splitHostPort(randomUpstream(req.authproxy_endpoint.upstream))
       @http_proxy.web(req, res, {
         target: "http://#{dest.host}:#{dest.port}",
         headers: { 'x-forwarded-user': req.session.passport.user },
-        host: req.conci_domain,
+        host: req.authproxy_domain,
         xfwd: true
         })
 

@@ -1,11 +1,11 @@
 {
-  "name": "conci",
+  "name": "authproxy",
   "version": "0.0.1",
   "description": "OAuth Proxy",
-  "main": "lib/conci.js",
+  "main": "lib/authproxy",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxfontes/conci"
+    "url": "https://github.com/lxfontes/authproxy"
   },
   "keywords": [
     "oauth",
@@ -15,9 +15,9 @@
   "author": "lxfontes",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lxfontes/conci/issues"
+    "url": "https://github.com/lxfontes/authproxy/issues"
   },
-  "homepage": "https://github.com/lxfontes/conci",
+  "homepage": "https://github.com/lxfontes/authproxy",
   "dependencies": {
     "coffee-script": "1.7.1",
     "http-proxy": "*",
