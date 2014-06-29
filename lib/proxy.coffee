@@ -96,7 +96,9 @@ class Proxy
       dest = splitHostPort(randomUpstream(req.conci_endpoint.upstream))
       @http_proxy.web(req, res, {
         target: "http://#{dest.host}:#{dest.port}",
-        host: req.conci_domain
+        headers: { 'x-forwarded-user': req.session.passport.user },
+        host: req.conci_domain,
+        xfwd: true
         })
 
 module.exports = new Proxy
