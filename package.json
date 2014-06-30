@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/lxfontes/authproxy"
   },
+  "bin": {
+    "authproxy": "./bin/authproxy"
+  },
   "keywords": [
     "oauth",
     "proxy",

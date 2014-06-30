@@ -24,12 +24,16 @@ for k, domain of CONFIG.domains
   proxy.addInternalDomain(CONFIG.server.auth_domain, domain)
 
 app = express()
-app.use(session({secret: CONFIG.server.cookie_secret}))
+app.use(session({
+  secret: CONFIG.server.cookie_secret,
+  resave: true,
+  saveUninitialized: true
+}))
 proxy.configApp(app)
 
 server = http.createServer(app)
-server.listen CONFIG.server.bind_port, (err) ->
+server.listen CONFIG.server.bind_port, CONFIG.server.bind_ip, (err) ->
   if err
     console.log("Failed to bind")
     process.exit(1)
-  console.log("Listening on #{CONFIG.server.bind_port}")
+  console.log("Listening on #{CONFIG.server.bind_ip}:#{CONFIG.server.bind_port}")
